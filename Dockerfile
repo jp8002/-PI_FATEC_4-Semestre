@@ -1,3 +1,4 @@
+FROM python:3.13.7-alpine3.22
 
 # Essa variável de ambiente é usada para controlar se o Python deve 
 # gravar arquivos de bytecode (.pyc) no disco. 1 = Não, 0 = Sim
