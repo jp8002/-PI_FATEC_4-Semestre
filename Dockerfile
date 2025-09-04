@@ -27,3 +27,13 @@ RUN python -m venv /venv && \
   adduser --disabled-password --no-create-home duser && \
   chown -R duser:duser /venv && \
   chmod -R +x /scripts
+
+# Adiciona a pasta scripts e venv/bin 
+# no $PATH do container.
+ENV PATH="/scripts:/venv/bin:$PATH"
+
+# Muda o usuário para duser
+USER duser
+
+# Executa o arquivo scripts/commands.sh
+CMD ["commands.sh"]

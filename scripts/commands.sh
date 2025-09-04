@@ -10,6 +10,11 @@ done
 
 echo "✅ Postgres Database Started Successfully ($POSTGRES_HOST:$POSTGRES_PORT)"
 
+echo "Começando a fezer as migrações...."
 python manage.py makemigrations --noinput
+
+echo "Aplicando as migrações...."
 python manage.py migrate --noinput
+
+echo "Iniciando o servidor.."
 python manage.py runserver 0.0.0.0:8000
