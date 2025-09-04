@@ -1,8 +1,7 @@
-FROM python:3.13.7-alpine3.22
 
 # Essa variável de ambiente é usada para controlar se o Python deve 
 # gravar arquivos de bytecode (.pyc) no disco. 1 = Não, 0 = Sim
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE = 1
 
 # Copia a pasta "djangoapp" e "scripts" para dentro do container.
 COPY djangoapp /djangoapp
@@ -21,12 +20,17 @@ EXPOSE 8000
 # imagem como uma nova camada.
 # Agrupar os comandos em um único RUN pode reduzir a quantidade de camadas da 
 # imagem e torná-la mais eficiente.
-RUN python -m venv /venv && \
+RUN apk add --no-cache --upgrade dos2unix && \
+  apk add --no-cache --upgrade bash && \
+  dos2unix ../scripts/commands.sh && \
+  python -m venv /venv && \
   /venv/bin/pip install --upgrade pip && \
   /venv/bin/pip install -r /djangoapp/requirements.txt && \
   adduser --disabled-password --no-create-home duser && \
   chown -R duser:duser /venv && \
-  chmod -R +x /scripts
+  chmod -R +x /scripts 
+
+  
 
 # Adiciona a pasta scripts e venv/bin 
 # no $PATH do container.
@@ -37,3 +41,4 @@ USER duser
 
 # Executa o arquivo scripts/commands.sh
 CMD ["commands.sh"]
+

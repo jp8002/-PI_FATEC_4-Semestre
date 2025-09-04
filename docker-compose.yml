@@ -10,7 +10,7 @@ services:
     volumes:
       - ./djangoapp:/djangoapp
     env_file:
-      - ./dotenv_files/.env
+      - ./.env
     depends_on:
       - psql
   psql:
@@ -19,4 +19,4 @@ services:
     volumes:
       - ./data/postgres/data:/var/lib/postgresql/data/
     env_file:
-      - ./dotenv_files/.env
+      - ./.env
